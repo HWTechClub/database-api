@@ -1,3 +1,4 @@
+import csv
 import smtplib
 from socket import gaierror
 
@@ -7,14 +8,11 @@ login = "hasan@hwtech.club"
 password = "QA7YNTNmpjwMBkn" 
 
 sender = "hasan@hwtech.club"
-receiver = "akilan@hwtech.club"
 
-message = f"""\
-Subject: Hi
-To: {receiver}
+message = """Subject: Whatsapp web
+To: {recipient}
 From: {sender}
-
-hello, how are you."""
+Hi {name}, bye bye"""
 
 try:
     with smtplib.SMTP("smtp.migadu.com", 587) as server:
@@ -23,7 +21,16 @@ try:
         server.starttls()
         server.ehlo()
         server.login("hasan@hwtech.club", "QA7YNTNmpjwMBkn")
-        server.sendmail(sender, receiver, message)
+        with open("contact.csv") as file:
+         reader = csv.reader(file)
+         next(reader)  # it skips the header row
+         for name, email in reader:
+           server.sendmail(
+           sender,
+           email,
+           message.format(name=name, recipient=email, sender=sender),
+          )
+        
 except (gaierror, ConnectionRefusedError):
   print('Failed to connect to the server. Bad connection settings?')
 except smtplib.SMTPServerDisconnected:
@@ -31,4 +38,4 @@ except smtplib.SMTPServerDisconnected:
 except smtplib.SMTPException as e:
   print('SMTP error occurred: ' + str(e))
 else:
-  print('Sent')
+  print(f'Sent to {name}')
