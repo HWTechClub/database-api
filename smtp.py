@@ -4,7 +4,7 @@ from socket import gaierror
 port = 587
 smtp_server = "smtp.migadu.com"
 login = "hasan@hwtech.club" 
-password = "Hasan@100!" 
+password = "QA7YNTNmpjwMBkn" 
 
 sender = "hasan@hwtech.club"
 receiver = "akilan@hwtech.club"
@@ -22,7 +22,7 @@ try:
         server.ehlo()
         server.starttls()
         server.ehlo()
-        server.login("hasan@hwtech.club", "Hasan@100!")
+        server.login("hasan@hwtech.club", "QA7YNTNmpjwMBkn")
         server.sendmail(sender, receiver, message)
 except (gaierror, ConnectionRefusedError):
   print('Failed to connect to the server. Bad connection settings?')
